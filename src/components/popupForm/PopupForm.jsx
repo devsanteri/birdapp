@@ -13,14 +13,13 @@ const BirdPopup = {
     right: 'auto',
     bottom: 'auto',
     border: '1px solid rgb(0, 0, 0)',
-    background: 'rgb(165, 153, 153)',
+    background: '#aa9fa5',
     overflow: 'auto',
     borderRadius: '30px',
     outline: 'none',
     padding: '32px',
     marginRight: '-40%',
     transform: 'translate(-50%, -50%)',
-    zIndex: 1,
     }
 };
 
@@ -100,7 +99,7 @@ class PopupForm extends React.Component {
             <button className="submitButton" type="submit" onSubmit={this.handleSubmit}>
               SUBMIT
             </button>
-            <br />
+            
             <button onClick={this.closeModal} className="cancelButton">
               CANCEL
             </button>
