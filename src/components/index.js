@@ -1,9 +1,9 @@
 import Header from './header';
 import Navbar from './navbar';
-import Form from './form';
+import PopupForm from './popupForm';
 
 export {
     Header,
     Navbar,
-    Form,
+    PopupForm,
 }

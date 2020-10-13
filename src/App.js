@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Header, Form } from './components';
+import { Header, PopupForm } from './components';
 import { geolocated } from 'react-geolocated';
 
 var myIcon = L.icon({
@@ -29,6 +29,7 @@ state = {
 
   return (
     <div className="App">
+      <PopupForm />
       <Header />
         <Map className="map" center={userPos} zoom={this.state.zoom}>
           <TileLayer
@@ -48,7 +49,6 @@ state = {
             </Popup>
           </Marker>
           </Map>
-          <Form />
     </div>
     );
   }

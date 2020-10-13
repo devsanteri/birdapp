@@ -1,0 +1,60 @@
+
+.addButton
+{
+position: fixed;
+bottom: 1px;
+right: 30px;
+height: 100px;
+width: 100px;
+border-radius: 50px;
+background-color: #519cde;
+color: white;
+font-size: 100px;
+text-align: center;
+padding-bottom: 112px;
+
+}
+
+.selectStyle 
+{
+margin-top: 10px;
+margin-bottom: 10px;
+width: 196px;
+height: 41px;
+font-size: 20px;
+border-radius: 10px;
+}
+
+.submitButton
+{
+background-color: #446d44;
+margin-left: 38px;
+height: 45px;
+width: 120px;
+margin-top: 20px;
+border-radius: 10px;
+
+color:white;
+font-size: 26px;
+}
+
+.cancelButton
+{
+background-color: red;
+margin-left: 38px;
+height: 45px;
+width: 120px;
+margin-top: 20px;
+border-radius: 10px;
+
+
+font-size: 26px;
+}
+
+.inputText
+{
+font-size: 15px;
+text-align:center;
+height: 35px;
+border-radius: 10px;
+}
