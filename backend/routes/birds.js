@@ -1,18 +1,22 @@
 const router = require('express').Router();
-let Bird = require('../models/bird.model');
+const Bird = require('../models/bird.models');
 
-router.route('/').get((req, res) => {
+router.route('/getall').get((req, res) => {
   Bird.find()
     .then(birds => res.json(birds))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => {
+      console.log(err)
+      res.status(400).json({error: 'Message'})
+    });
 });
 
 router.route('/add').post((req, res) => {
-  const birdname = req.body.birdName;
+  console.log(req.body)
+  const birdname = req.body.birdname;
   const nickname = req.body.nickname;
   const date = Date.parse(req.body.date);
-  const birdlat = +req.body.birdLat;
-  const birdlon = +req.body.birdLon;
+  const birdlat = +req.body.birdlat;
+  const birdlon = +req.body.birdlon;
 
 
   const newBird = new Bird({
@@ -24,8 +28,14 @@ router.route('/add').post((req, res) => {
   });
 
   newBird.save()
-  .then(() => res.json('Bird added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+  .then((data) => {
+    console.log(data)
+    res.status(200).json('Bird added!')
+  })
+  .catch(err => {
+    // console.log(err)
+    res.status(400).json({error: err})
+  });
 });
 
 router.route('/:id').get((req, res) => {
@@ -43,10 +53,11 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Bird.findById(req.params.id)
     .then(bird => {
-      bird.username = req.body.username;
-      bird.description = req.body.description;
-      bird.duration = Number(req.body.duration);
+      bird.birdname = req.body.birdname;
+      bird.nickname = req.body.nickname;
       bird.date = Date.parse(req.body.date);
+      bird.birdlat = req.body.birdlat;
+      bird.birdlon = req.body.birdlon;
 
       bird.save()
         .then(() => res.json('bird updated!'))

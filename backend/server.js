@@ -21,9 +21,9 @@ connection.once('open', () => {
     console.log("MongoDB database connection is working");
 });
 
-const birdsRouter = require('./routes/birds');
+const birdRouter = require('./routes/birds');
 
-app.use('/birds', BirdsRouter);
+app.use('/birds', birdRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

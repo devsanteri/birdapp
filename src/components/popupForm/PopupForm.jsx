@@ -1,7 +1,9 @@
-import Axios from "axios";
+import axios from "axios";
 import React from "react";
 import Modal from "react-modal";
 import "./PopupForm.css";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 
 // Modal popup styling
@@ -29,34 +31,74 @@ class PopupForm extends React.Component {
   constructor(props) {
     super(props);
 
+
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: false,
+
+      bird: {
+      birdname: '',
+      nickname: '',
+      date: new Date(),
+      },
+
+      birds: [],
     };
+
   }
 
+
+  onBirdChange(e) {
+    console.log(this.state.bird);
+    this.setState({
+    ...this.state,
+    bird: {
+    ...this.state.bird,
+    [e.target.name]: e.target.value
+    }
+    })
+  }
+
+  onDateChange(date) {
+    this.setState({
+      ...this.state,
+      bird: {
+      ...this.state.bird,
+      date: date
+      }
+      })
+    }
+
+
   openModal = () => {
-    this.setState({ modalIsOpen: true });
+    this.setState({
+       modalIsOpen: true 
+    });
   }
 
   closeModal = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({ 
+      modalIsOpen: false 
+    });
   }
 
   formSubmit = (e) => {
     e.preventDefault();
    
+
     const bird = {
-      birdname: this.state.birdname,
-      nickname: this.state.nickname,
-      date: this.state.date,
-      birdlat: this.state.birdlat,
-      birdlon: this.state.lon
+      ...this.state.bird,
+      birdlat: this.props.userPos[0],
+      birdlon: this.props.userPos[1],
     }
 
-    console.log(bird);
+    axios.post('http://localhost:5000/birds/add', bird)
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err.data))
 
-    Axios.post('http://localhost:5000/birds/add', bird)
-      .then(res => console.log(res.data));
+    this.setState({ 
+      modalIsOpen: false 
+    });
+
   }
 
 
@@ -73,13 +115,34 @@ class PopupForm extends React.Component {
           contentLabel="Bird Observation"
         >
           <form onSubmit={this.formSubmit}>
-             <input className="inputText" type="text" name="birdname" placeholder="Linnun nimi" /><br />
              
-             <input className="inputText" type="text" name="nickname" placeholder="Nimimerkki" /><br />
+             <input className="inputText" 
+             type="text" 
+             name="birdname"
+             value={this.state.bird.birdname}
+             onChange={this.onBirdChange.bind(this)}
+             placeholder="Linnun nimi" 
+             /><br />
+
              
-             <input className="inputDate" type="date" name="date" placeholder="Päivämäärä" /><br />
+             <input className="inputText"
+              type="text" 
+              name="nickname"
+              value={this.state.bird.nickname}
+              onChange={this.onBirdChange.bind(this)}
+              placeholder="Nimimerkki" 
+              />
+              <br />
+             
+             <DatePicker
+             className="inputText"
+             selected={this.state.bird.date}
+             onChange={this.onDateChange.bind(this)}
+             name="date"
+             /><br />
+
             
-            <button className="submitButton" type="submit" onSubmit={this.handleSubmit}>
+            <button className="submitButton" type="submit">
               SUBMIT
             </button>
             
