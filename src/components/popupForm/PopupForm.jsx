@@ -1,3 +1,4 @@
+import Axios from "axios";
 import React from "react";
 import Modal from "react-modal";
 import "./PopupForm.css";
@@ -43,37 +44,19 @@ class PopupForm extends React.Component {
 
   formSubmit = (e) => {
     e.preventDefault();
-    const newBird = {};
+   
+    const bird = {
+      birdname: this.state.birdname,
+      nickname: this.state.nickname,
+      date: this.state.date,
+      birdlat: this.state.birdlat,
+      birdlon: this.state.lon
+    }
 
+    console.log(bird);
 
-    e.target.childNodes.forEach(function(el) {
-
-      // Create new bird from form data
-      if (el.tagName === "INPUT" || el.tagName === "SELECT") {
-        if (el.name === "lat" || el.name === "lon") {
-          newBird.location = {
-            [el.name]: el.value,
-            ...newBird.location
-          };
-          el.value = null;
-        } else {
-          newBird[el.name] = el.value;
-          el.value = null;
-        }
-      }
-    });
-
-    // give id to new bird
-    newBird.id = this.props.birds.length + 1;
-
-    // add observation time
-    newBird.date = new Date().toDateString();
-
-    // Create new birds array
-    const newBirds = this.props.birds.slice();
-    newBirds.push(newBird);
-    
-    this.props.saveNewBirds(newBirds);
+    Axios.post('http://localhost:5000/birds/add', bird)
+      .then(res => console.log(res.data));
   }
 
 
@@ -90,11 +73,11 @@ class PopupForm extends React.Component {
           contentLabel="Bird Observation"
         >
           <form onSubmit={this.formSubmit}>
-             <input className="inputText" type="text" name="name" placeholder="Linnun nimi" /><br />
+             <input className="inputText" type="text" name="birdname" placeholder="Linnun nimi" /><br />
              
-             <input className="inputText" type="text" name="notes" placeholder="Nimimerkki" /><br />
+             <input className="inputText" type="text" name="nickname" placeholder="Nimimerkki" /><br />
              
-             <input className="inputText" type="file" name="file" placeholder="Kuva" /><br />
+             <input className="inputDate" type="date" name="date" placeholder="Päivämäärä" /><br />
             
             <button className="submitButton" type="submit" onSubmit={this.handleSubmit}>
               SUBMIT

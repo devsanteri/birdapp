@@ -45,7 +45,7 @@ state = {
               height="200" 
               /><br />
               <span className="popup_text_bot">Nähty: 15:13 13.09.2020</span><br />
-              <span className="popup_text_name">Nimimerkki: Antti</span>
+              <span className="popup_text_name">Nimimerkki: Atte :3</span>
             </Popup>
           </Marker>
           </Map>
