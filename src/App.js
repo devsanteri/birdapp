@@ -55,8 +55,8 @@ componentDidMount() {
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker style={{filter: "grayscale(100%)"}} position={this.props.coords ? [this.props.coords.latitude, this.props.coords.longitude] : userPos} icon={hereIcon}>
-           
+          <Marker position={this.props.coords ? [this.props.coords.latitude, this.props.coords.longitude] : userPos} icon={hereIcon}>
+           <Popup>Olet tässä</Popup>
           </Marker> 
         {this.state.birds.map(bird =>          
         <Marker key={bird._id} position={[bird.birdlat, bird.birdlon]} icon={myIcon}>
@@ -80,7 +80,7 @@ componentDidMount() {
 };
 export default geolocated({
   positionOptions:{
-    enableHighAccuracy: true
+    enableHighAccuracy: false
   },
   userDecisionTimeout: 10000
 })(App);
