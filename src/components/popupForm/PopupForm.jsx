@@ -91,13 +91,15 @@ class PopupForm extends React.Component {
       birdlon: this.props.userPos[1],
     }
 
-    axios.post('http://localhost:5000/birds/add', bird)
+    axios.post('/birds/add', bird)
       .then(res => console.log(res.data))
       .catch(err => console.error(err.data))
 
     this.setState({ 
       modalIsOpen: false 
     });
+
+    window.location.reload(false);
 
   }
 

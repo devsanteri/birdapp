@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -22,64 +22,66 @@ var hereIcon = L.icon({
 
 
 class App extends Component {
-state = {
-  lat: 60.294844,
-  lng: 25.044100,
-  zoom: 13,
-  birds: []
-};
+  state = {
+    lat: 60.294844,
+    lng: 25.044100,
+    zoom: 13,
+    birds: []
+  };
 
-componentDidMount() {
-  axios.get('http://localhost:5000/birds/getall')
-    .then(res => {
-      this.setState({
-        ...this.state,
-        birds: res.data
-      }) 
-    })
-    .catch(err => console.error(err))
-}
+  componentDidMount() {
+    axios.get('/birds/getall')
+      .then(res => {
+        this.setState({
+          ...this.state,
+          birds: res.data
+        })
+      })
+      .catch(err => console.error(err))
+  }
 
   render() {
-    const userLng = this.props.coords ? this.props.coords.longitude: this.state.lng;
-    const userLat = this.props.coords ? this.props.coords.latitude: this.state.lat;
+    const userLng = this.props.coords ? this.props.coords.longitude : this.state.lng;
+    const userLat = this.props.coords ? this.props.coords.latitude : this.state.lat;
     const userPos = [userLat, userLng];
 
 
-  return (
-    <div className="App">
-      <PopupForm userPos={this.props.coords ? [this.props.coords.latitude, this.props.coords.longitude] : userPos} />
-      <Header />
+    return (
+      <div className="App">
+        <PopupForm userPos={this.props.coords ? [this.props.coords.latitude, this.props.coords.longitude] : userPos} />
+        <Header />
         <Map className="map" center={this.props.coords ? [this.props.coords.latitude, this.props.coords.longitude] : userPos} zoom={this.state.zoom}>
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+          />
           <Marker position={this.props.coords ? [this.props.coords.latitude, this.props.coords.longitude] : userPos} icon={hereIcon}>
-           <Popup>Olet tässä</Popup>
-          </Marker> 
-        {this.state.birds.map(bird =>          
-        <Marker key={bird._id} position={[bird.birdlat, bird.birdlon]} icon={myIcon}>
-            <Popup className="popup_main">
-              <h1 className="popup_text_top">{bird.birdname}</h1><br />
-              <img className="popup_img" src="https://www.thespruce.com/thmb/_aWSIt4nnacTIemT8yX1YYlLIuU=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Bird-GettyImages-582446599-58ec5c4d5f9b58ef7e24e7f4.jpg"
-              alt="Bird"
-              width="200"
-              height="200" 
-              /><br />
-              <span className="popup_text_bot">Nähty: {Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'}).format(Date.parse(bird.date))}</span><br />
-              <span className="popup_text_name">Nimimerkki: {bird.nickname}</span>
-            </Popup>
-          </Marker> 
+            <Popup>Olet tässä</Popup>
+          </Marker>
+          {this.state.birds.map(bird =>
+            <Marker key={bird._id} position={[bird.birdlat, bird.birdlon]} icon={myIcon}>
+              <Popup className="popup_main">
+                <h1 className="popup_text_top">{bird.birdname}</h1><br />
+                <img className="popup_img" src="https://www.thespruce.com/thmb/_aWSIt4nnacTIemT8yX1YYlLIuU=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Bird-GettyImages-582446599-58ec5c4d5f9b58ef7e24e7f4.jpg"
+                  alt="Bird"
+                  width="200"
+                  height="200"
+                /><br />
+                <span className="popup_text_bot">Nähty: {Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).format(Date.parse(bird.date))}</span><br />
+                <span className="popup_text_name">Nimimerkki: {bird.nickname}</span>
+              </Popup>
+            </Marker>
           )}
-          </Map>
-    </div>
+        </Map>
+        
+      </div>
     );
   }
 
 };
+
 export default geolocated({
-  positionOptions:{
+  positionOptions: {
     enableHighAccuracy: false
   },
   userDecisionTimeout: 10000

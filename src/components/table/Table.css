@@ -1,0 +1,64 @@
+#birds {
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 3px solid #ddd;
+    word-break: break-word;
+    position: relative;
+  }
+  
+#birds tbody {
+    display: block;
+    overflow-y: scroll;
+    height: 50vh;
+    width: 100%;
+}
+
+#birds thead {
+    display: block;
+    position: fixed;
+    width: 100%;
+}
+
+  #birds td, #birds th {
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+  
+  #birds tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #birds tr:hover {background-color: #ddd;}
+  
+  #birds th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: rgb(155, 135, 152);
+    color: white;
+  }
+
+  .sortButton {
+      padding-left:30px;
+      padding-right:30px;
+  }
+
+  .closeButton {
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-left: 294px;
+    margin-bottom: 10px;
+    background-color: #010101;
+    color:white;
+  }
+
+  .navbar-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 45px;
+    color: #aa9fa5;
+    text-decoration: inherit;
+    text-transform: uppercase;
+    outline: none;
+    font-size: 15px;
+  }
